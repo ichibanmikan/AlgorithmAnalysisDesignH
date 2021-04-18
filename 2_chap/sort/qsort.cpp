@@ -17,10 +17,10 @@ void qsort(int *array, int leftSize, int rightSize){
     int start=leftSize;
     int end=rightSize;
     while(end>start){
-        while(start<=end&&pivot>array[start]){
+        while(start<=end&&pivot<array[start]){
             start++;
         }
-        while(end>=start&&pivot<array[end]){
+        while(end>=start&&pivot>array[end]){
             end--;
         }
         if(end>=start){

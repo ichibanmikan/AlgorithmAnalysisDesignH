@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int aggDiv(int n, int m){
+long long aggDiv(int n, int m){
     if(m==1||n==m){
         return 1;
     }
@@ -13,10 +13,10 @@ int aggDiv(int n, int m){
 int main(){
     int n;
     ifstream infile("input.txt");
-    ofstream outfile("outfile.txt");
+    ofstream outfile("output.txt");
     infile >> n;
     // cin >> n;
-    int result=0;
+    long long result=0;
     for (int i=0; i<n; i++){
         result+=aggDiv(n, i+1);
     }

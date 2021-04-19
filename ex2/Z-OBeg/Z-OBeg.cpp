@@ -1,7 +1,10 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
+ifstream infile("input.txt");
+ofstream outfile("output.txt");
 void zoBeg(int n, int c, int* w, int* v, int** m){
     for (int i=0; i<=c; i++){
         if(w[0]>i){
@@ -25,20 +28,20 @@ void zoBeg(int n, int c, int* w, int* v, int** m){
     }
     for (int i=0; i<n; i++){
         for (int j=0; j<=c; j++){
-            cout << m[i][j] << ' ';
+            outfile << m[i][j] << ' ';
         }
-        cout << endl;
+        outfile << endl;
     }
-    cout << m[n-1][c] << endl;
+    outfile << m[n-1][c] << endl;
 }
 
 int main(){
     int n, c;
-    cin >> n >> c;
+    infile >> n >> c;
     int* arrayW=new int [n];
     int* arrayV=new int [n];
     for (int i=0; i<n; i++){
-        cin >> arrayW[i] >> arrayV[i];
+        infile >> arrayW[i] >> arrayV[i];
     }
     int** arrayM=new int* [n];
     for (int i=0; i<n; i++){
@@ -46,4 +49,4 @@ int main(){
     }
     zoBeg(n, c, arrayW, arrayV, arrayM);
     return 0;
-}
+}//0-1背包问题

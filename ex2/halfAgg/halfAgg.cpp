@@ -15,9 +15,9 @@ int main(){
     int n;
     ifstream infile("input.txt");
     ofstream outfile("output.txt");
-    // input.txt >> n;
-    // outfile << setn(n);
-    cin >> n;
-    cout << setn(n) << endl;
+    infile >> n;
+    outfile << setn(n);
+    // cin >> n;
+    // cout << setn(n) << endl;
     return 0;
 }//半数集问题

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <windows.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -24,19 +26,33 @@ int main(){
 	for (int i=0; i<n; i++){
 		gdArray[i].no=i;
 		infile >> gdArray[i].weight >> gdArray[i].value;
-		gdArray[i].valPerWei=((double)(gdArray[i].value))/((double)(gdArray[i].weight));
 	}//输入价值, 重量, 并计算出单位价值存储起来
+
+    LARGE_INTEGER LIB_ZOBeg;
+    LARGE_INTEGER LIE_ZOBeg;
+    LARGE_INTEGER FREQ_ZOBeg;
+    QueryPerformanceFrequency(&FREQ_ZOBeg);
+    QueryPerformanceCounter(&LIB_ZOBeg);
+	for (int i=0; i<n; i++){
+		gdArray[i].valPerWei=((double)(gdArray[i].value))/((double)(gdArray[i].weight));
+	}
 	sort(gdArray, gdArray+n, cmp);
+    QueryPerformanceCounter(&LIE_ZOBeg);
+    double useTime=(double)(LIE_ZOBeg.QuadPart-LIB_ZOBeg.QuadPart)/((double)FREQ_ZOBeg.QuadPart);
+    outfile << "数据规模为" << n << "的贪心背包问题贪心算法所需时间: ";
+    outfile << fixed << setprecision(8) << useTime << endl;
+    outfile << endl;
+
 	int i=0;
 	outfile << "no" << ' ' << "weight" << ' ' << "value" << ' ' << "ratio" << endl;
 	while(true){
 		m-=gdArray[i].weight;
 		if(m<0){
 			m+=gdArray[i].weight;
-			outfile << gdArray[i].no << "    " << gdArray[i].weight << "      " << gdArray[i].value << "     " << double(m)/double(gdArray[i].weight) << endl;
+			outfile << gdArray[i].no << ' ' << gdArray[i].weight << ' ' << gdArray[i].value << ' ' << double(m)/double(gdArray[i].weight) << endl;
 			break;
 		}
-		outfile << gdArray[i].no << "    " << gdArray[i].weight << "      " << gdArray[i].value << "     " << 1 << endl;
+		outfile << gdArray[i].no << ' ' << gdArray[i].weight << ' ' << gdArray[i].value << ' ' << 1 << endl;
 		i++;
 	}
 	return 0;

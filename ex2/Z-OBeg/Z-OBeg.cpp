@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <windows.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -26,12 +28,12 @@ void zoBeg(int n, int c, int* w, int* v, int** m){
             }
         }
     }
-    for (int i=0; i<n; i++){
-        for (int j=0; j<=c; j++){
-            outfile << m[i][j] << ' ';
-        }
-        outfile << endl;
-    }
+    // for (int i=0; i<n; i++){
+    //     for (int j=0; j<=c; j++){
+    //         outfile << m[i][j] << ' ';
+    //     }
+    //     outfile << endl;
+    // }
     outfile << m[n-1][c] << endl;
 }
 
@@ -47,6 +49,18 @@ int main(){
     for (int i=0; i<n; i++){
         arrayM[i]=new int [c+1];
     }
+    
+    LARGE_INTEGER LIB_ZOBeg;
+    LARGE_INTEGER LIE_ZOBeg;
+    LARGE_INTEGER FREQ_ZOBeg;
+    QueryPerformanceFrequency(&FREQ_ZOBeg);
+    QueryPerformanceCounter(&LIB_ZOBeg);
     zoBeg(n, c, arrayW, arrayV, arrayM);
+    QueryPerformanceCounter(&LIE_ZOBeg);
+    double useTime=(double)(LIE_ZOBeg.QuadPart-LIB_ZOBeg.QuadPart)/((double)FREQ_ZOBeg.QuadPart);
+    outfile << "数据规模为" << n << "的0-1背包问题动态规划算法所需时间: ";
+    outfile << fixed << setprecision(8) << useTime << endl;
+    outfile << endl;
+
     return 0;
 }//0-1背包问题

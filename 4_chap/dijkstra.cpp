@@ -58,5 +58,7 @@ int main(){
         delete  [] Graph[i];
     }
     delete [] Graph;
+    delete [] dist;
+    delete [] S;
     return 0;
 }

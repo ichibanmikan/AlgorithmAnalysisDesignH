@@ -10,16 +10,30 @@ class edge{
         edge(){}
 };
 
-class node : public node{
+class node : public edge{
     public:
         int no;
-        node* next;
+        edge* next;
         node(){}
+        setEdge(int n, int w){
+            
+        }
 };
 
-class Graph{
+class Graph : public node{
     public:
-        int 
+        node* Graph;
+        Graph(int n, int** G){
+            Graph=new node [n];
+            for (int i=0; i<n; i++){
+                Graph[i].no=i;
+                for (int j=0; j<n; j++){
+                    if(G[i][j]!=0){
+                        edge e
+                    }
+                }
+            }
+        }  
 };
 
 int main(){

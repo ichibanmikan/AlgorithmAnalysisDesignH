@@ -1,19 +1,23 @@
 #include <iostream>
+#include <fstream>
+#include <windows.h>
+#include <iomanip>
+
+#define maxn 10005
 
 using namespace std;
 
-#define maxn 1000 
 int n;//物品数量 
 int c;//背包容量 
-double w[maxn];//存放物品重量的数组 
-double v[maxn];//存放物品价值的数组 
+int cw;//当前重量
+int cv;//当前价值
+int bestv;//最优价值
+int x[maxn];//记录当前物品是否装入背包 
 int order[maxn];//物品编号1~n
 int best_x[maxn];//用于记录回溯过程的最优情况 
+double w[maxn];//存放物品重量的数组 
+double v[maxn];//存放物品价值的数组 
 double vw[maxn];//物品单位重量价值 
-int x[maxn];//记录当前物品是否装入背包 
-int bestv;//最优价值 best value
-int cw;//当前重量 current weight 
-int cv;//当前价值 current value 
 
 void setOrder(){
 	for(int i=1;i<=n;++i){
@@ -66,7 +70,7 @@ void Backtrack(int i){
 	}//到达根节点且根节点处理完毕
 	if(i<=n){
 		if(cw+w[i]<=c){
-			x[i]=1;//用来main函数构造最优解，将物品放入时x[i]=1 
+			x[i]=1;//用来构造最优解，将物品放入时x[i]=1 
 			cw+=w[i];
 			cv+=v[i];
 			Backtrack(i+1);
@@ -83,23 +87,33 @@ int main(){
 	bestv=0;
     cv=0;
     cw=0;
-	cin>>n;//物品数量
-	cin>>c;//背包容量
+    ifstream infile("input.txt");
+    ofstream outfile("output.txt");
+	infile >> n;//物品数量
+	infile >> c;//背包容量
 	for(int i=1;i<=n;++i){
-        cin>>w[i];
-    }
-	for(int i=1;i<=n;++i){
-        cin>>v[i];
+        infile>>w[i];
+        infile>>v[i];
     }
 	for(int i=1;i<=n;++i){
         order[i]=i;
     }
-	setOrder();//将物品按照单位重量价值排序(w,v,order,vw数组都要按照这个排序) 
-	Backtrack(1);//从根节点开始回溯 
-	cout << bestv << endl;
+	setOrder();
+    LARGE_INTEGER LIB_ZOBeg;
+    LARGE_INTEGER LIE_ZOBeg;
+    LARGE_INTEGER FREQ_ZOBeg;
+    QueryPerformanceFrequency(&FREQ_ZOBeg);
+    QueryPerformanceCounter(&LIB_ZOBeg);
+    Backtrack(1);
+    QueryPerformanceCounter(&LIE_ZOBeg);
+    double useTime=(double)(LIE_ZOBeg.QuadPart-LIB_ZOBeg.QuadPart)/((double)FREQ_ZOBeg.QuadPart);
+    outfile << "数据规模为" << n << "的回溯算法0-1背包问题所需时间: ";
+    outfile << fixed << setprecision(8) << useTime << endl;
+    outfile << endl;
+	outfile << bestv << endl;
 	for(int i=1;i<=n;++i){
         if(best_x[i]==1){
-            cout<<order[i]<<" ";
+            outfile<<order[i]<<" ";
         }
     }
 	return 0;

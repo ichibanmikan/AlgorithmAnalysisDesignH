@@ -18,7 +18,7 @@ class nodes{
             bound=0.0;
             t=0;
             no=0;
-        }
+        } 
 
         nodes(int n, int v, int w, int fl, int* s1, int* s2, int* s3){
             x1=new int [n];

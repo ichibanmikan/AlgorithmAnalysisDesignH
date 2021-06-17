@@ -10,6 +10,9 @@ class nodes{
         double bound;
         int* x1, x0, xu;
         int t;
+        int numx1;
+        int numx0;
+        int numxu;
 
         nodes(){
             d=0.0;
@@ -20,7 +23,7 @@ class nodes{
             no=0;
         } 
 
-        nodes(int n, int v, int w, int fl, int* s1, int* s2, int* s3){
+        nodes(int n, int v, int w, int fl, int* s1, int* s2, int* s3, int n1, int n0, int nu){
             x1=new int [n];
             x0=new int [n];
             xu=new int [n];
@@ -34,9 +37,20 @@ class nodes{
             no=fl;
             bound=0.0;
             t=1;
+            numx1=n1;
+            numx0=n0;
+            numxu=nu;
         }
+
         void setBound(double d){
             bound=d;
+        }
+
+        bool operator< (nodes ndOther){
+            if(bound!=n2.bound){
+                return bound<n2.bound;
+            }
+            return n1.t<n2.t; 
         }
 };
 

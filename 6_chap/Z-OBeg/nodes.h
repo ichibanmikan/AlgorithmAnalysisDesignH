@@ -8,14 +8,15 @@ class nodes{
         int cw;
         int no;
         double bound;
-        int* x1, x0, xu;
+        int* x1;
+        int* x0;
+        int* xu;
         int t;
         int numx1;
         int numx0;
         int numxu;
 
         nodes(){
-            d=0.0;
             cv=0;
             cw=0;
             bound=0.0;
@@ -47,10 +48,10 @@ class nodes{
         }
 
         bool operator< (nodes ndOther){
-            if(bound!=n2.bound){
-                return bound<n2.bound;
+            if(bound!=ndOther.bound){
+                return bound<ndOther.bound;
             }
-            return n1.t<n2.t; 
+            return t<ndOther.t; 
         }
 };
 
